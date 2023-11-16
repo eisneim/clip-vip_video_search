@@ -1,6 +1,10 @@
 
 [original CLIP-ViP repo](https://github.com/microsoft/XPretrain/tree/main/CLIP-ViP)
 
+```
+$ python search_in_folder.py --phrase "a car is driving on the road" /Volumes/Samsung_T3/_download/test_cut2
+```
+
 ## sample code:
 here is a simple example showing how to use CLIP-Vip's text embeddings and video embeddings to calculate Cosine similarity
 
@@ -71,15 +75,10 @@ container = av.open("/Volumes/Samsung_T3/_download/test_cut/py_053.mp4")
 
 clip_len = 12
 fcount = container.streams.video[0].frames
-# sample 16 frames
+# sample 12 frames
 indices = sample_frame_indices(clip_len=clip_len, frame_sample_rate=fcount//clip_len, seg_len=fcount)
 video = read_video_pyav(container, indices)
 pixel_values = processor(videos=list(video), return_tensors="pt").pixel_values
-
-print("video.shape", pixel_values.shape)
-B, N, C, H, W = pixel_values.shape
-vv = pixel_values.reshape(-1, C, H, W)
-print(vv.shape)
 
 inputs = {
         "if_norm": True,
